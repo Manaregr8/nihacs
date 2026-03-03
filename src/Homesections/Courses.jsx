@@ -27,7 +27,7 @@ const sampleCourses = [
     id: 4,
     title: "Master in Cybersecurity And Ethical Hacking",
     description: "Secure architectures, IAM, and cloud incident response.",
-    duration: "4 Months",
+    duration: "2 years",
     image: "/Courses/2.png",
   },
   {

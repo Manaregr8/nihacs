@@ -309,7 +309,7 @@ const Footer = () => {
                       />
                     </svg>
                     <a
-                      href="mailto:info@nifase.com"
+                      href="mailto:info@nihacs.com"
                       className="hover:text-red-600 transition-colors"
                     >
                       info@nifase.com
