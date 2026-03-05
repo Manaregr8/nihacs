@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useCallback, useRef } from "react";
 import Carouselcourses from "../Homesections/carouselcourses";
+import { FormModal } from "../Homesections/form/page";
 
 /* ────────── CONFIG ────────── */
 const GRAY_WORDS  = ["SECURE",  "PROTECT", "DEFEND"];
@@ -266,27 +267,7 @@ export default function Hero() {
 
         {/* CTA buttons */}
         <div className="flex flex-wrap justify-center gap-4 mt-6">
-          <a
-            href="#courses"
-            style={{
-              display:        "inline-block",
-              marginTop:      "clamp(1.2rem, 4vw, 2rem)",
-              background:     "#ff1e00",
-              color:          "white",
-              fontWeight:     800,
-              fontSize:       "clamp(0.9rem, 2.2vw, 1.1rem)",
-              padding:        "clamp(0.75rem, 2vw, 1rem) clamp(1.6rem, 5vw, 2.4rem)",
-              borderRadius:   9999,
-              textDecoration: "none",
-              fontFamily:     '"Helvetica Neue", Arial, sans-serif',
-              transition:     "transform .25s ease, box-shadow .25s ease",
-              boxShadow:      "0 3px 16px rgba(255,30,0,0.6)",
-            }}
-            onMouseEnter={e => { e.currentTarget.style.transform = "scale(1.07)"; e.currentTarget.style.boxShadow = "0 6px 28px rgba(255,30,0,0.75)"; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = "scale(1)";    e.currentTarget.style.boxShadow = "0 3px 16px rgba(255,30,0,0.6)"; }}
-          >
-            Start Hacking
-          </a>
+            <FormModal label="Start Hacking"  />
 
           <a
             href="/courses"

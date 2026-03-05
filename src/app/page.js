@@ -10,6 +10,8 @@ import Trainer from "../Homesections/Trainer.jsx";
 import Company from "../Homesections/company.jsx";
 import Recommend from "../Homesections/Recommend.jsx";
 import Banner from "../Homesections/banner.jsx";
+import Certification from "../Homesections/certification.jsx";
+import Career from "../Homesections/career.jsx";
 
 export default function Home() {
   return (
@@ -19,7 +21,9 @@ export default function Home() {
         <Carouselsection/>
         <Recommend/>
         <Testimonial/>
+        <Certification/>
         <Gallery/>
+        <Career/>
         <CyberPlacements/>
         <Company/>
         <Choose/>
