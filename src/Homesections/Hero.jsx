@@ -81,56 +81,69 @@ function Letter({ char, flipping, delay, onDone }) {
    Keeps a stable array of letter slots; pads/trims as word length changes.
 */
 function FlipRow({ word, color, style = {} }) {
-  const [slots, setSlots]     = useState(() => word.split("").map(c => ({ char: c, key: 0 })));
+  const [displayWord, setDisplayWord] = useState(word);
+  const [letters, setLetters] = useState(word.split(""));
   const [flipping, setFlipping] = useState(false);
-  const prevWordRef             = useRef(word);
-  const doneRef                 = useRef(0);
-  const totalRef                = useRef(word.length);
-  const pendingWord             = useRef(word);
+  const prevWordRef = useRef(word);
 
   useEffect(() => {
     if (word === prevWordRef.current) return;
-    pendingWord.current = word;
+
     prevWordRef.current = word;
+    setFlipping(true);
 
-    const maxLen = Math.max(slots.length, word.length);
-    totalRef.current = maxLen;
-    doneRef.current  = 0;
+    const maxLen = Math.max(displayWord.length, word.length);
 
-    // Build new slots array padded to maxLen
-    const newSlots = Array.from({ length: maxLen }, (_, i) => ({
-      char: word[i] ?? "\u00A0",
-      key:  (slots[i]?.key ?? 0) + 1,
+    const paddedOld = displayWord.padEnd(maxLen, " ");
+    const paddedNew = word.padEnd(maxLen, " ");
+
+    const newLetters = Array.from({ length: maxLen }, (_, i) => ({
+      old: paddedOld[i],
+      new: paddedNew[i],
+      id: `${i}-${Date.now()}`
     }));
 
-    setSlots(newSlots);
-    setFlipping(true);
-  }, [word]);
+    setLetters(newLetters);
 
-  const handleLetterDone = useCallback(() => {
-    doneRef.current += 1;
-    if (doneRef.current >= totalRef.current) {
-      // Trim trailing nbsp slots now that animation is complete
-      setSlots(pendingWord.current.split("").map((c, i) => ({
-        char: c,
-        key:  (i + 1) * 100, // stable key after trim
-      })));
+    const totalDuration = maxLen * STAGGER_MS + FLIP_MS * 2;
+
+    const timer = setTimeout(() => {
+      setDisplayWord(word);
+      setLetters(word.split(""));
       setFlipping(false);
-      doneRef.current = 0;
-    }
-  }, []);
+    }, totalDuration);
+
+    return () => clearTimeout(timer);
+  }, [word]);
 
   return (
     <div style={{ display: "inline-block", color, ...style }}>
-      {slots.map((slot, i) => (
-        <Letter
-          key={`${i}-${slot.key}`}
-          char={slot.char}
-          flipping={flipping}
-          delay={i * STAGGER_MS}
-          onDone={handleLetterDone}
-        />
-      ))}
+      {letters.map((letter, i) => {
+        if (!flipping) {
+          return <span key={i}>{letter}</span>;
+        }
+
+        return (
+          <span
+            key={letter.id}
+            style={{
+              display: "inline-block",
+              animation: `flipAnim ${FLIP_MS * 2}ms ease ${i * STAGGER_MS}ms forwards`,
+              transformOrigin: "center",
+            }}
+          >
+            {letter.new}
+          </span>
+        );
+      })}
+
+      <style jsx>{`
+        @keyframes flipAnim {
+          0%   { transform: scaleX(1); }
+          50%  { transform: scaleX(0); }
+          100% { transform: scaleX(1); }
+        }
+      `}</style>
     </div>
   );
 }
