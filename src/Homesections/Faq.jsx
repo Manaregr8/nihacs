@@ -138,7 +138,7 @@ export default function CyberSecurityFAQ() {
         {/* ✅ CTA — pure <a> tag, no nested button */}
         <div className="max-w-4xl mx-auto mt-20 text-center">
           <a
-            href="/contact"
+            href="/contact-us"
             className="inline-block px-8 py-4 bg-red-600 text-white font-bold rounded-xl transition-all duration-300 hover:bg-red-700 hover:scale-105 hover:shadow-2xl hover:shadow-red-500/50"
           >
             Contact Security Team
