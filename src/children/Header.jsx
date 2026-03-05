@@ -14,7 +14,7 @@ const Header = () => {
 
   const menuItems = [
     { name: 'Our Courses', href: '/courses' },
-    { name: 'About', href: '/About' },
+    { name: 'About', href: '/about-us' },
     { name: 'Blog', href: '/blog' },
     { name: 'Get in touch!', href: '/contact' },
   ];
