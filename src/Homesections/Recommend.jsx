@@ -80,7 +80,7 @@ export default function Recommend() {
               </div>
 
               {/* Course Content */}
-              <div className="p-6 flex-1 flex flex-col">
+              <div className="p-6 flex-1 flex flex-col">  
                 <h3 className="text-lg font-semibold text-white mb-2">
                   {course.title}
                 </h3>
