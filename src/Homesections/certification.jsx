@@ -3,65 +3,64 @@ import React from "react";
 
 const certs = [
   {
-    name: "Certified Ethical Hacker",
-    code: "CEH",
-    issuer: "EC-Council",
-    img: "https://images.credly.com/size/340x340/images/b2790b6a-cca3-4582-a84f-37f8a17e4e31/image.png",
+    name: "Bachelors of VOC. STD In Cyber Security",
+    code: "WSPT",
+    issuer: "National Institute of Hacking & Cyber Security",
+    img: "certificate/4.png",
+    tag: "Bachelors Degree",
+    partners: ["Skill India", "Meta Business Partner"],
+    color: "#f70404",
   },
   {
-    name: "Offensive Security Certified Professional",
-    code: "OSCP",
-    issuer: "Offensive Security",
-    img: "https://images.credly.com/size/340x340/images/ec81134d-e80b-4eb5-ae07-0eb8e1a60fcd/image.png",
+    name: "Master in Cyber Security",
+    code: "BEH",
+    issuer: "National Institute of Hacking & Cyber Security",
+    img: "certificate/5.png",
+    tag: "Master Degree ",
+    partners: ["Skill India", "Meta Business Partner"],
+    color: "#f70404",
   },
   {
-    name: "CompTIA Security+",
-    code: "SEC+",
-    issuer: "CompTIA",
-    img: "https://images.credly.com/size/340x340/images/74790a75-8451-400a-8536-92d792c5184a/CompTIA_Security_2Bce.png",
+    name: "Diploma in Cyber Security",
+    code: "DCS",
+    issuer: "National Institute of Hacking & Cyber Security",
+    img: "certificate/6.png",
+    tag: "Diploma Certificate",
+    partners: ["Skill India", "Meta Business Partner"],
+    color: "#f70404",
   },
   {
-    name: "CISSP",
-    code: "CISSP",
-    issuer: "ISC²",
-    img: "https://images.credly.com/size/340x340/images/6ee69f11-7614-4e9e-be3a-c02b5f93bb5c/image.png",
+    name: "Web Security And Presentation Testing",
+    code: "B.VOC",
+    issuer: "National Institute of Hacking & Cyber Security",
+    img: "certificate/7.png",
+    tag: "Degree Certificate",
+    partners: ["Skill India", "Meta Business Partner"],
+    color: "#f70404",
   },
   {
-    name: "Certified Penetration Testing Specialist",
-    code: "CPTS",
-    issuer: "HackTheBox",
-    img: "https://images.credly.com/size/340x340/images/b5b8b507-b7df-467b-9a5c-79879abf8bc5/image.png",
-  },
-  {
-    name: "CompTIA CySA+",
-    code: "CySA+",
-    issuer: "CompTIA",
-    img: "https://images.credly.com/size/340x340/images/7f7657b9-4d1b-4b8d-b57f-971c8e4f0be3/image.png",
-  },
-  {
-    name: "Certified Cloud Security Professional",
-    code: "CCSP",
-    issuer: "ISC²",
-    img: "https://images.credly.com/size/340x340/images/53acdae5-d69f-4dda-b650-d02ed7a50dd7/image.png",
-  },
-  {
-    name: "AWS Security Specialty",
-    code: "AWS-S",
-    issuer: "Amazon",
-    img: "https://images.credly.com/size/340x340/images/53acdae5-d69f-4dda-b650-d02ed7a50dd7/image.png",
+    name: "Basic Ethical Hacking",
+    code: "M.SC",
+    issuer: "National Institute of Hacking & Cyber Security",
+    img: "certificate/8.png",
+    tag: "Masters Certificate",
+    partners: ["Skill India", "Meta Business Partner"],
+    color: "#f70404",
   },
 ];
 
-// Triplicate for seamless infinite loop
 const track = [...certs, ...certs, ...certs];
 
 export default function CertCarousel() {
+  const [failedImgs, setFailedImgs] = React.useState({});
+
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
-        .fn-bebas { font-family: 'Bebas Neue', sans-serif; }
-        .fn-mono  { font-family: 'Space Mono', monospace; }
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+        .fn-bebas    { font-family: 'Bebas Neue', sans-serif; }
+        .fn-mono     { font-family: 'Space Mono', monospace; }
+        .fn-cormorant{ font-family: 'Cormorant Garamond', serif; }
 
         .ticker-wrapper {
           overflow: hidden;
@@ -72,7 +71,7 @@ export default function CertCarousel() {
           content: '';
           position: absolute;
           top: 0; bottom: 0;
-          width: 120px;
+          width: 180px;
           z-index: 2;
           pointer-events: none;
         }
@@ -87,18 +86,13 @@ export default function CertCarousel() {
 
         .ticker-track {
           display: flex;
-          gap: 16px;
+          gap: 28px;
           width: max-content;
-          animation: tickerLTR 30s linear infinite;
+          animation: tickerLTR 60s linear infinite;
+          align-items: center;
+          padding: 20px 0 28px;
         }
-        .ticker-track-reverse {
-          display: flex;
-          gap: 16px;
-          width: max-content;
-          animation: tickerRTL 25s linear infinite;
-        }
-        .ticker-track:hover,
-        .ticker-track-reverse:hover {
+        .ticker-track:hover {
           animation-play-state: paused;
         }
 
@@ -106,55 +100,151 @@ export default function CertCarousel() {
           0%   { transform: translateX(0); }
           100% { transform: translateX(calc(-100% / 3)); }
         }
-        @keyframes tickerRTL {
-          0%   { transform: translateX(calc(-100% / 3)); }
-          100% { transform: translateX(0); }
+
+        /* ── Certificate Card ── */
+        .cert-card {
+          flex-shrink: 0;
+          width: 420px;
+          background: #0a0a0a;
+          border: 1px solid #222;
+          border-radius: 8px;
+          overflow: hidden;
+          cursor: default;
+          transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s, border-color 0.35s;
+          position: relative;
+        }
+        .cert-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 8px;
+          background: linear-gradient(135deg, rgba(200,168,75,0.06) 0%, transparent 60%);
+          pointer-events: none;
+          z-index: 1;
+        }
+        .cert-card:hover {
+          transform: translateY(-8px) scale(1.02);
+          box-shadow: 0 24px 60px rgba(200,168,75,0.18), 0 0 0 1px rgba(200,168,75,0.3);
+          border-color: rgba(200,168,75,0.5);
         }
 
-        .cert-chip {
+        /* Image section */
+        .cert-img-area {
+          width: 100%;
+          height: 260px;
+          overflow: hidden;
+          position: relative;
+          background: #111;
+        }
+        .cert-img-area img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: center top;
+          transition: transform 0.5s ease;
+          display: block;
+        }
+        .cert-card:hover .cert-img-area img {
+          transform: scale(1.05);
+        }
+
+        /* Gold overlay bar at top of image */
+        .cert-img-bar {
+          position: absolute;
+          top: 0; left: 0; right: 0;
+          height: 4px;
+          background: linear-gradient(90deg, #c8a84b, #f0d080, #c8a84b);
+          z-index: 2;
+        }
+
+        /* Fallback badge */
+        .cert-fallback {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          gap: 12px;
+          background: linear-gradient(135deg, #0f0f0f 0%, #1a1a0f 100%);
+        }
+
+        /* Info section */
+        .cert-info {
+          padding: 18px 22px 20px;
+          position: relative;
+          z-index: 2;
+        }
+        .cert-tag {
+          display: inline-block;
+          font-family: 'Space Mono', monospace;
+          font-size: 9px;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          color: #ff0000;
+          border: 1px solid rgba(200,168,75,0.35);
+          border-radius: 2px;
+          padding: 3px 8px;
+          margin-bottom: 10px;
+        }
+        .cert-name {
+          font-family: 'Bebas Neue', sans-serif;
+          font-size: 22px;
+          letter-spacing: 0.06em;
+          color: #fff;
+          line-height: 1.15;
+          margin-bottom: 6px;
+        }
+        .cert-issuer {
+          font-family: 'Space Mono', monospace;
+          font-size: 9px;
+          color: #555;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+          line-height: 1.5;
+        }
+        .cert-footer {
+          margin-top: 14px;
+          padding-top: 14px;
+          border-top: 1px solid #1a1a1a;
           display: flex;
           align-items: center;
-          justify-content: center;
-          background: #0a0a0a;
-          border: 1px solid #1a1a1a;
-          border-radius: 2px;
-          padding: 14px 20px;
-          flex-shrink: 0;
-          cursor: default;
-          transition: border-color 0.25s, background 0.25s;
+          justify-content: space-between;
         }
-        .cert-chip:hover {
-          border-color: #dc2626;
-          background: rgba(220,38,38,0.04);
-        }
-        .cert-chip-img {
-          width: 90px;
-          height: 90px;
-          object-fit: contain;
-          flex-shrink: 0;
-          transition: filter 0.25s, transform 0.25s;
-        }
-        .cert-chip:hover .cert-chip-img {
-          filter: drop-shadow(0 0 10px rgba(220,38,38,0.6));
-          transform: scale(1.08);
-        }
-        .cert-chip-fallback {
-          width: 90px;
-          height: 90px;
-          display: none;
+        .cert-partners {
+          display: flex;
+          gap: 8px;
           align-items: center;
-          justify-content: center;
-          background: rgba(220,38,38,0.1);
-          border: 1px solid rgba(220,38,38,0.25);
+        }
+        .cert-partner-badge {
+          font-family: 'Space Mono', monospace;
+          font-size: 8px;
+          color: #444;
+          border: 1px solid #222;
           border-radius: 2px;
+          padding: 2px 6px;
+          letter-spacing: 0.05em;
+        }
+        .cert-gold-dot {
+          width: 6px;
+          height: 6px;
+          border-radius: 50%;
+          background: #ff0000;
           flex-shrink: 0;
+        }
+
+        /* Divider */
+        .gold-divider {
+          height: 1px;
+          background: linear-gradient(90deg, #dc2626 0%, transparent 65%);
+          margin-top: 20px;
         }
       `}</style>
 
       <section className="w-full bg-black py-14 overflow-hidden">
 
         {/* ── Header ── */}
-        <div className="max-w-6xl mx-auto px-6 mb-10">
+        <div className="max-w-6xl mx-auto px-6 mb-12">
           <p className="fn-mono text-red-600 text-xs tracking-widest uppercase mb-2">
             nihacs.com
           </p>
@@ -166,52 +256,79 @@ export default function CertCarousel() {
               Industry-recognized credentials trusted by security professionals worldwide.
             </p>
           </div>
-          {/* Red gradient divider */}
-          <div
-            className="h-px mt-5"
-            style={{ background: "linear-gradient(90deg,#dc2626 0%,transparent 65%)" }}
-          />
+          <div className="gold-divider" />
         </div>
 
-        {/* ── Row 1 — Left to Right ── */}
-        <div className="ticker-wrapper mb-4">
+        {/* ── Single Row Ticker ── */}
+        <div className="ticker-wrapper">
           <div className="ticker-track">
             {track.map((c, i) => (
-              <div className="cert-chip" key={`ltr-${i}`}>
-                <img
-                  src={c.img}
-                  alt={c.code}
-                  className="cert-chip-img"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    e.currentTarget.nextElementSibling.style.display = "flex";
-                  }}
-                />
-                <div className="cert-chip-fallback">
-                  <span className="fn-bebas text-red-600 text-sm">{c.code}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+              <div className="cert-card" key={`cert-${i}`}>
 
-        {/* ── Row 2 — Right to Left ── */}
-        <div className="ticker-wrapper">
-          <div className="ticker-track-reverse">
-            {[...track].reverse().map((c, i) => (
-              <div className="cert-chip" key={`rtl-${i}`}>
-                <img
-                  src={c.img}
-                  alt={c.code}
-                  className="cert-chip-img"
-                  onError={(e) => {
-                    e.currentTarget.style.display = "none";
-                    e.currentTarget.nextElementSibling.style.display = "flex";
-                  }}
-                />
-                <div className="cert-chip-fallback">
-                  <span className="fn-bebas text-red-600 text-sm">{c.code}</span>
+                {/* Image area */}
+                <div className="cert-img-area">
+                  <div className="cert-img-bar" />
+                  {failedImgs[`${c.code}-${i}`] ? (
+                    <div className="cert-fallback">
+                      <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+                        <polygon
+                          points="40,5 72,20 72,60 40,75 8,60 8,20"
+                          fill="rgba(200,168,75,0.08)"
+                          stroke="#c8a84b"
+                          strokeWidth="1.2"
+                        />
+                        <polygon
+                          points="40,14 63,26 63,54 40,66 17,54 17,26"
+                          fill="none"
+                          stroke="rgba(200,168,75,0.3)"
+                          strokeWidth="0.6"
+                          strokeDasharray="3,3"
+                        />
+                        <text x="40" y="44" textAnchor="middle"
+                          fontFamily="'Bebas Neue',sans-serif"
+                          fontSize={c.code.length > 4 ? "11" : "15"}
+                          fill="#c8a84b" letterSpacing="1">
+                          {c.code}
+                        </text>
+                      </svg>
+                      <span style={{
+                        fontFamily:"'Space Mono',monospace",
+                        fontSize:"10px",
+                        color:"#444",
+                        letterSpacing:"0.1em",
+                        textTransform:"uppercase",
+                        textAlign:"center",
+                        padding:"0 20px"
+                      }}>
+                        {c.name}
+                      </span>
+                    </div>
+                  ) : (
+                    <img
+                      src={c.img}
+                      alt={c.name}
+                      onError={() =>
+                        setFailedImgs((p) => ({ ...p, [`${c.code}-${i}`]: true }))
+                      }
+                    />
+                  )}
                 </div>
+
+                {/* Info section */}
+                <div className="cert-info">
+                  <div className="cert-tag">{c.tag}</div>
+                  <div className="cert-name">{c.name}</div>
+                  <div className="cert-issuer">{c.issuer}</div>
+                  <div className="cert-footer">
+                    <div className="cert-partners">
+                      {c.partners.map((p, pi) => (
+                        <span className="cert-partner-badge" key={pi}>{p}</span>
+                      ))}
+                    </div>
+                    <div className="cert-gold-dot" />
+                  </div>
+                </div>
+
               </div>
             ))}
           </div>
